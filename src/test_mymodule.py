@@ -23,8 +23,10 @@ class MyModuleTest(unittest.TestCase):
                    ('bryantkobe', 'B', 8),
                    ('bryantkobe', 'C', 24)]
         self.test_sorted_tuple = sorted(self.test_raw_tuple, key=operator.itemgetter(1))
+        #print self.test_sorted_tuple
         self.test_dict = {'C':2, 'A':1, 'B':1}
         self.test_num_unique_name = [1, 1, 2]
+        self.test_total_cost_each_drug = [23,8,47]
         self.test_output_file = pwd+'/../insight_testsuite/tests/my_test/output/test_output_file_1.txt'
 
 
@@ -87,6 +89,7 @@ class MyModuleTest(unittest.TestCase):
     def test_print_drug_info(self):
         """The output file is as expected."""
 
+        pwd = self.get_script_path()
         fout1 = self.test_output_file
         fout2 = pwd+'/../insight_testsuite/tests/my_test/output/test_output_file_2.txt'
         print_drug_info(self.test_sorted_tuple, self.test_dict, self.test_num_unique_name, self.test_total_cost_each_drug, fout2)
