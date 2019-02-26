@@ -38,7 +38,7 @@ Unit tests can be run by
 
 ## Data Corner Case Handling
 
-Several corner cases were considered. They assertEqual
+Several corner cases were considered. They are:
 
 1. Missing data
 If the input data has a missing field, such as
