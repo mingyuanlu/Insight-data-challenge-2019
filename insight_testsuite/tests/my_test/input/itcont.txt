@@ -1,0 +1,5 @@
+id,prescriber_last_name,prescriber_first_name,drug_name,drug_cost
+1,JORDAN,Michael,A,23
+2,JAMES,LEBRON,C,23
+3,BRYANT,KOBE,B,8
+4,BRYANT,KOBE,C,24
