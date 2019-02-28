@@ -23,7 +23,58 @@ def read_line(row):
     """Read line from input file."""
 
     good_line = True #If true, this line contains valid data. Else, the line is skipped
-    data = row.rstrip().split(',')
+
+    # Check for "" instances, which occurs in prescriber names and drug names
+    quotation_loc = [i for i in range(len(row)) if row.startswith('\"', i)]
+    #print quotation_loc
+
+    if len(quotation_loc) > 0:
+        #If we have odd number of quotation marks, a quotation mark is missing. Skip Line
+        if len(quotation_loc)%2 != 0:
+            good_line = False
+            return [None, None, None, None, good_line, -1]
+        else:
+            data = []
+            #print row[0:quotation_loc[0]]
+            #print [row[quotation_loc[i]:quotation_loc[i+1]+1] for i in range(len(quotation_loc)-1)]
+            #print row[quotation_loc[len(quotation_loc)-1]+1:len(row)]
+            #substrings = []
+            substrings = [row[0:quotation_loc[0]]] + [row[quotation_loc[i]:quotation_loc[i+1]+1] for i in range(len(quotation_loc)-1)] + [row[quotation_loc[len(quotation_loc)-1]+1:len(row)]]
+            #substrings.append(row[0:quotation_loc[0]])
+            #substrings.append([row[quotation_loc[i]:quotation_loc[i+1]+1] for i in range(len(quotation_loc)-1)])
+            #substrings.append(row[quotation_loc[len(quotation_loc)-1]+1:len(row)])
+            #print ('substrings: '), substrings
+            #print ('len(substrings): %d') % (len(substrings))
+            #n_fields = 0
+            #n_fields += len(substrings[0].split(','))
+            #n_fields += len(substrings[len(substrings)-1].rstrip().split(','))
+            if(len(substrings[0].split(',')[:-1])>0):
+                for x in substrings[0].split(',')[:-1]:
+                    data.append(x)
+            #data.append(substrings[0].split(',')[0])
+            for s in range(1,len(substrings)-1):
+                if s%2==1: #odd entry is between ""
+                    data.append(substrings[s])
+                else:
+                    if(len(substrings[s].split(',')[1:-1])>0):
+                        for x in substrings[s].split(',')[1:-1]:
+                            data.append(x)
+            if(len(substrings[len(substrings)-1].rstrip().split(',')[1:])>0):
+                for x in substrings[len(substrings)-1].rstrip().split(',')[1:]:
+                    data.append(x)
+            #data.append(x for x in substrings[len(substrings)-1].rstrip().split(',')[1:])
+            #print data
+
+
+    else:
+        data = row.rstrip().split(',')
+
+    #print ('raw data'), data
+    
+    # Check for number of fields, which should be 5
+    if len(data) != 5:
+        good_line = False
+        return [None, None, None, None, good_line, -1]
 
     # Check for missing fields. If any field is missing, the row is skipped
     if "" in data:

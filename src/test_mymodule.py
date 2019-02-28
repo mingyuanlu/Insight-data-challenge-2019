@@ -33,8 +33,8 @@ class MyModuleTest(unittest.TestCase):
     def test_read_line(self):
         """Line is correctlt split and missing/corrupetd fields are checked."""
 
-        expected_data = ['lu','ming-yuan','DRUG1',135.999,True,3]
-        input_string = '001,LU,MING-YUAN,DRUG1,135.999\n'
+        expected_data = ['\"lu, jr\"','ming-yuan','\"DRUG,1\"',135.999,True,3]
+        input_string = '001,\"LU, JR\",MING-YUAN,\"DRUG,1\",135.999\n'
         data = read_line(input_string)
         self.assertEqual(expected_data[0],data[0])
         self.assertEqual(expected_data[1],data[1])
@@ -42,6 +42,11 @@ class MyModuleTest(unittest.TestCase):
         self.assertAlmostEqual(expected_data[3],data[3])
         self.assertEqual(expected_data[4],data[4])
         self.assertAlmostEqual(expected_data[5],data[5])
+
+        #Check for odd numers of quotation marks
+        input_string = '001,\"LU\",\"MING-YUAN,DRUG1,135\n'
+        data = read_line(input_string)
+        self.assertFalse(data[4])
 
         #Check for missing fields
         input_string = '001,,MING-YUAN,DRUG1,135\n'

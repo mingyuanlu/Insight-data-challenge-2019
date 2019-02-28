@@ -59,6 +59,21 @@ If the input data has corrupted fields, such as
 
 When counting the number of prescribers, I ignore differences in uppercase and lowercase letters. 'Jordan' is considered the same as 'JORDAN'. Drug names, however, are exactly the same as in the input file. 'DRUG1' is considered different from 'Drug1'. This is to conform to the project requirement "the exact drug name as shown in the input dataset".
 
+4. Quotation marks
+
+Occasionally quotation marks appear in the drug name or the prescriber's name, when the name contains a comma ','. For instance:
+
+```
+"MOORE, JR"
+```
+or
+```
+"PANCRELIPASE 5,000"
+```
+
+In such cases, special care is taken to correctly read the data, and the quotation marks are preserved as part of the name.
+
+
 ## Note
 
 The program automatically scans the cost entry of the input data, and finds the largest number of decimal digits. The output cost will follow this decimal convention. For example, if the input data is such:
