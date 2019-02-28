@@ -40,6 +40,7 @@ Unit tests can be run by
 Several corner cases were considered. They are:
 
 1. Missing data
+
 If the input data has a missing field, such as
 ```
 0001,,JAMES,DRUG1,788
@@ -47,6 +48,7 @@ If the input data has a missing field, such as
 , then this line of data will be skipped.
 
 2.  Corrupted data
+
 If the input data has corrupted fields, such as
 ```
 0001,HARDEN,JAMES,DRUG1,gha8
@@ -54,6 +56,7 @@ If the input data has corrupted fields, such as
 , where the cost is not a number, then this line of data will be skipped.
 
 3. Lowercase/uppercase
+
 When counting the number of prescribers, I ignore differences in uppercase and lowercase letters. 'Jordan' is considered the same as 'JORDAN'. Drug names, however, are exactly the same as in the input file. 'DRUG1' is considered different from 'Drug1'.
 
 ## Note
