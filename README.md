@@ -20,7 +20,6 @@ This is a project that gathers drug information from prescription data. The fini
 
 The original data is in text format. The text is parsed and we identify columns representing the first name, the last name, the drug name, and the drug cost. This data is formatted in a table, and we first sort the table by the drug name in ascending order. This will accelerate the following processes as information of each drug is now localized. Next, we identify drug types, and their frequency in the data. We then compute, for each drug, the number of unique prescribers, and the total drug cost. Since the table is sorted and we know the frequency of each drug, we avoid the need to search the whole table for these computations. Finally, the desired information, namely the drug name, number of prescribers, and the total cost, forms a final table. We then sort the table by descending order in cost, and then by ascending order in drug name, as requested.
 
-When counting the number of prescribers, I ignore differences in uppercase and lowercase letters. 'Jordan' is considered the same as 'JORDAN'. Drug names, however, are exactly the same as in the input file. 'DRUG1' is considered different from 'Drug1'.
 
 ## Run Instructions
 
@@ -54,6 +53,9 @@ If the input data has corrupted fields, such as
 ```
 , where the cost is not a number, then this line of data will be skipped.
 
+3. Lowercase/uppercase
+When counting the number of prescribers, I ignore differences in uppercase and lowercase letters. 'Jordan' is considered the same as 'JORDAN'. Drug names, however, are exactly the same as in the input file. 'DRUG1' is considered different from 'Drug1'.
+
 ## Note
 
 The program automatically scans the cost entry of the input data, and finds the largest number of decimal digits. The output cost will follow this decimal convention. For example, if the input data is such:
@@ -63,7 +65,7 @@ The program automatically scans the cost entry of the input data, and finds the 
 0002,CURRY,STEPHEN,DRUG1,9.991
 0003,THOMPSON,KLAY,DRUG2,76.1
 ```
-Since the maximal number of decimal digits is three (9.991), the output cost is be formatted as:
+Since the maximal number of decimal digits is three (9.991), the output cost will be formatted as:
 
 ```
 DRUG1,2,19.991
