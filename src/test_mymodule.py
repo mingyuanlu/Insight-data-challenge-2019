@@ -18,28 +18,30 @@ class MyModuleTest(unittest.TestCase):
 
         pwd = self.get_script_path()
         self.test_drug_info_file =  pwd+'/../insight_testsuite/tests/my_test/input/test_input_file.txt'
-        self.test_raw_tuple= [('jordanmichael', 'A', 23),
-                   ('jameslebron', 'C', 23),
+        self.test_raw_tuple= [('jordanmichael', 'A', 23.00),
+                   ('jameslebron', 'C', 23.10),
                    ('bryantkobe', 'B', 8),
-                   ('bryantkobe', 'C', 24)]
+                   ('bryantkobe', 'C', 24.9)]
         self.test_sorted_tuple = sorted(self.test_raw_tuple, key=operator.itemgetter(1))
         #print self.test_sorted_tuple
         self.test_dict = {'C':2, 'A':1, 'B':1}
         self.test_num_unique_name = [1, 1, 2]
-        self.test_total_cost_each_drug = [23,8,47]
+        self.test_total_cost_each_drug = [23.00,8.00,48.00]
         self.test_output_file = pwd+'/../insight_testsuite/tests/my_test/output/test_output_file_1.txt'
 
 
     def test_read_line(self):
         """Line is correctlt split and missing/corrupetd fields are checked."""
 
-        expected_data = ['lu','ming-yuan','DRUG1',135]
-        input_string = '001,LU,MING-YUAN,DRUG1,135\n'
+        expected_data = ['lu','ming-yuan','DRUG1',135.999,True,3]
+        input_string = '001,LU,MING-YUAN,DRUG1,135.999\n'
         data = read_line(input_string)
         self.assertEqual(expected_data[0],data[0])
         self.assertEqual(expected_data[1],data[1])
         self.assertEqual(expected_data[2],data[2])
         self.assertAlmostEqual(expected_data[3],data[3])
+        self.assertEqual(expected_data[4],data[4])
+        self.assertAlmostEqual(expected_data[5],data[5])
 
         #Check for missing fields
         input_string = '001,,MING-YUAN,DRUG1,135\n'
@@ -62,9 +64,11 @@ class MyModuleTest(unittest.TestCase):
     def test_read_input_file(self):
         """Inpue file is correctly read and tuple constructed."""
 
+        test_max_digit = 2
         tuple1 = self.test_raw_tuple
-        tuple2 = read_input_file(self.test_drug_info_file)
+        tuple2, max_digit = read_input_file(self.test_drug_info_file)
         self.assertEqual(tuple1, tuple2)
+        self.assertAlmostEqual(max_digit,test_max_digit)
 
     def test_get_unique_drug_list(self):
         """Unique drug list dict is correctly returned."""
@@ -92,7 +96,7 @@ class MyModuleTest(unittest.TestCase):
         pwd = self.get_script_path()
         fout1 = self.test_output_file
         fout2 = pwd+'/../insight_testsuite/tests/my_test/output/test_output_file_2.txt'
-        print_drug_info(self.test_sorted_tuple, self.test_dict, self.test_num_unique_name, self.test_total_cost_each_drug, fout2)
+        print_drug_info(self.test_sorted_tuple, self.test_dict, self.test_num_unique_name, self.test_total_cost_each_drug, fout2, 2)
         self.assertTrue(filecmp.cmp(fout1, fout2))
 
 

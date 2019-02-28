@@ -1,4 +1,4 @@
 drug_name,num_prescriber,total_cost
-C,2,47
-A,1,23
-B,1,8
+C,2,48.00
+A,1,23.00
+B,1,8.00

@@ -3,7 +3,7 @@
 1. [Method](README.md#method)
 1. [Run Instructions](README.md#run-instructions)
 1. [Data Corner Case Handling](README.md#data-corner-case-handling)
-
+1. [Note](README.md#note)
 --------
 
 This is a project that gathers drug information from prescription data. The finial output consists of a listing of the drugs, their costs, and the number of unique prescriptions. This project is based on the data challenge from Insight.
@@ -53,3 +53,19 @@ If the input data has corrupted fields, such as
 0001,HARDEN,JAMES,DRUG1,gha8
 ```
 , where the cost is not a number, then this line of data will be skipped.
+
+## Note
+
+The program automatically scans the cost entry of the input data, and finds the largest number of decimal digits. The output cost will follow this decimal convention. For example, if the input data is such:
+
+```
+0001,MILLER,REGGIE,DRUG1,10
+0002,CURRY,STEPHEN,DRUG1,9.991
+0003,THOMPSON,KLAY,DRUG2,76.1
+```
+Since the maximal number of decimal digits is three (9.991), the output cost is be formatted as:
+
+```
+DRUG1,2,19.991
+DRUG2,1,76.100
+```

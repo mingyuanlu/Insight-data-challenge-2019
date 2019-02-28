@@ -17,7 +17,7 @@ input_file = sys.argv[1]
 output_file = sys.argv[2]
 
 # A list of tuples. Columns: (full name, drug name, cost)
-clean_table = mymodule.read_input_file(input_file)
+clean_table, max_digit = mymodule.read_input_file(input_file)
 #print clean_table
 
 # sort by drug name in ascending order
@@ -34,6 +34,6 @@ num_unique_name_each_drug = mymodule.get_num_unique_name(clean_table, unique_dru
 # obtain the total cost of each drug
 total_cost_each_drug = mymodule.get_total_cost_each_drug(clean_table, unique_drug_dict)#, num_unique_name_each_drug)
 
-mymodule.print_drug_info(clean_table, unique_drug_dict, num_unique_name_each_drug, total_cost_each_drug, output_file)
+mymodule.print_drug_info(clean_table, unique_drug_dict, num_unique_name_each_drug, total_cost_each_drug, output_file, max_digit)
 
 print datetime.now() - start_time

@@ -18,6 +18,7 @@ def is_all_alphabets(data):
     return good_line
 '''
 
+
 def read_line(row):
     """Read line from input file."""
 
@@ -53,28 +54,35 @@ def read_line(row):
 
     if(good_line):
         #Don't distinguish lowercase & uppercase names. So lowercase for all names. However, since the code challenge instruction specifically states the output drug name should be "exactly" the same as the input, we won't make the drug name lowercase.
-        return [data[1].lower(), data[2].lower(), data[3], float(data[4]), good_line]
+        if not '.' in data[4]:
+            num_decimals = 0
+        else:
+            num_decimals = len(data[4].split('.')[1])
+        return [data[1].lower(), data[2].lower(), data[3], float(data[4]), good_line, num_decimals]
     else:
-        return [None, None, None, None, good_line]
+        return [None, None, None, None, good_line, -1]
 
 
 def read_input_file(input_file):
     """Read raw input file. Check missing/corrupted data at each cell. Make all last names and first names lowercase for comparison"""
 
     tuple = []
+    max_digit = 0
 
     with open(input_file) as f:
         for row in f:
-            last_name, first_name, drug_name, drug_cost, good_line = read_line(row)
+            last_name, first_name, drug_name, drug_cost, good_line, num_decimals = read_line(row)
             if(good_line):
                 #name.append(last_name+first_name)
                 #drug.append(drug_name)
                 #cost.append(drug_cost)
                 tuple.append((last_name+first_name, drug_name, drug_cost))
+                if num_decimals > max_digit:
+                    max_digit = num_decimals
 
 
     #return [map(lambda x:x.lower(), name), drug, cost]
-    return tuple
+    return [tuple, max_digit]
 
 def get_unique_drug_list(clean_table):
     """Return a dictionary. Key: unique drug. Value: number of prescriptions of the drug."""
@@ -116,7 +124,7 @@ def get_total_cost_each_drug(clean_table, unique_drug_dict):#, num_unique_name_e
 
     return total_cost_each_drug
 
-def print_drug_info(clean_table, unique_drug_dict, num_unique_name_each_drug, total_cost_each_drug, output_file):
+def print_drug_info(clean_table, unique_drug_dict, num_unique_name_each_drug, total_cost_each_drug, output_file, error_digit):
     """Print to output file."""
 
     #print clean_table
@@ -139,7 +147,7 @@ def print_drug_info(clean_table, unique_drug_dict, num_unique_name_each_drug, to
     output_table.sort(key=operator.itemgetter(2), reverse=True)
 
     #Round to integer for the cost
-    error_digit = 0
+    #error_digit = max_digit
     temp = '{0:.'+str(error_digit)+'f}'
 
     with open(output_file, "w") as f:
