@@ -5,18 +5,18 @@ import mymodule
 import operator
 from datetime import datetime
 
-#arg 1: input file
-
 if(len(sys.argv) != 3):
     print("Expected 2 argument (input file). Now have: %d") % (len(sys.argv))
     sys.exit(1)
 
 start_time = datetime.now()
 
+# arg 1: input file
+# arg 2: output file
 input_file = sys.argv[1]
 output_file = sys.argv[2]
 
-# A list of tuples. Columns: (full name, drug name, cost)
+# obtain a list of tuples. Columns: (full name, drug name, cost)
 clean_table, max_digit = mymodule.read_input_file(input_file)
 #print clean_table
 
@@ -34,6 +34,7 @@ num_unique_name_each_drug = mymodule.get_num_unique_name(clean_table, unique_dru
 # obtain the total cost of each drug
 total_cost_each_drug = mymodule.get_total_cost_each_drug(clean_table, unique_drug_dict)#, num_unique_name_each_drug)
 
+# print data to output_file, cost printed to max_digit decimals
 mymodule.print_drug_info(clean_table, unique_drug_dict, num_unique_name_each_drug, total_cost_each_drug, output_file, max_digit)
 
 print datetime.now() - start_time

@@ -3,21 +3,6 @@ import sys
 import numpy as np
 import operator
 
-'''
-def is_all_alphabets(data):
-    """Check that data composes of entirely alphabets, as a requirement for names."""
-
-    good_line = True
-    try:
-        if not data.isalpha():
-            raise ValueError("Not alphabets")
-    except ValueError:
-        print("%s is not entirely alphabets! This row will be skipped.")
-        good_line = False
-
-    return good_line
-'''
-
 
 def read_line(row):
     """Read line from input file."""
@@ -35,23 +20,12 @@ def read_line(row):
             return [None, None, None, None, good_line, -1]
         else:
             data = []
-            #print row[0:quotation_loc[0]]
-            #print [row[quotation_loc[i]:quotation_loc[i+1]+1] for i in range(len(quotation_loc)-1)]
-            #print row[quotation_loc[len(quotation_loc)-1]+1:len(row)]
-            #substrings = []
             substrings = [row[0:quotation_loc[0]]] + [row[quotation_loc[i]:quotation_loc[i+1]+1] for i in range(len(quotation_loc)-1)] + [row[quotation_loc[len(quotation_loc)-1]+1:len(row)]]
-            #substrings.append(row[0:quotation_loc[0]])
-            #substrings.append([row[quotation_loc[i]:quotation_loc[i+1]+1] for i in range(len(quotation_loc)-1)])
-            #substrings.append(row[quotation_loc[len(quotation_loc)-1]+1:len(row)])
-            #print ('substrings: '), substrings
-            #print ('len(substrings): %d') % (len(substrings))
-            #n_fields = 0
-            #n_fields += len(substrings[0].split(','))
-            #n_fields += len(substrings[len(substrings)-1].rstrip().split(','))
+
             if(len(substrings[0].split(',')[:-1])>0):
                 for x in substrings[0].split(',')[:-1]:
                     data.append(x)
-            #data.append(substrings[0].split(',')[0])
+
             for s in range(1,len(substrings)-1):
                 if s%2==1: #odd entry is between ""
                     data.append(substrings[s])
@@ -62,15 +36,12 @@ def read_line(row):
             if(len(substrings[len(substrings)-1].rstrip().split(',')[1:])>0):
                 for x in substrings[len(substrings)-1].rstrip().split(',')[1:]:
                     data.append(x)
-            #data.append(x for x in substrings[len(substrings)-1].rstrip().split(',')[1:])
-            #print data
-
 
     else:
         data = row.rstrip().split(',')
 
     #print ('raw data'), data
-    
+
     # Check for number of fields, which should be 5
     if len(data) != 5:
         good_line = False
@@ -85,17 +56,6 @@ def read_line(row):
     except ValueError:
         print("First column is not an ID number! This row will be skipped.")
         good_line = False
-
-    '''
-    if not is_all_alphabets(data[1])
-        good_line = False
-
-    if not is_all_alphabets(data[2])
-        good_line = False
-
-    if not is_all_alphabets(data[3])
-        good_line = False
-    '''
 
     try:
         val = float(data[4])
@@ -131,8 +91,6 @@ def read_input_file(input_file):
                 if num_decimals > max_digit:
                     max_digit = num_decimals
 
-
-    #return [map(lambda x:x.lower(), name), drug, cost]
     return [tuple, max_digit]
 
 def get_unique_drug_list(clean_table):
@@ -149,15 +107,11 @@ def get_num_unique_name(clean_table, unique_drug_dict):
     i = 0
     name_list = [data[0] for data in clean_table]
     drug_list = [data[1] for data in clean_table]
-    #print 'name_list', name_list
-    #rint 'drug_list', drug_list
+
     while i < len(drug_list):
-        #print 'i: ', i, ' drug_list[i] ', drug_list[i], unique_drug_dict[drug_list[i]]
-        #print name_list[i:i+unique_drug_dict[drug_list[i]]]
         n_names = len(set(name_list[i:i+unique_drug_dict[drug_list[i]]]))
         num_unique_name.append(n_names) #in sorted alphabetically ascending order of drug name
         i += unique_drug_dict[drug_list[i]]
-        #print 'n_names', n_names, ' i: ',i
 
     return num_unique_name
 
@@ -198,7 +152,6 @@ def print_drug_info(clean_table, unique_drug_dict, num_unique_name_each_drug, to
     output_table.sort(key=operator.itemgetter(2), reverse=True)
 
     #Round to integer for the cost
-    #error_digit = max_digit
     temp = '{0:.'+str(error_digit)+'f}'
 
     with open(output_file, "w") as f:
