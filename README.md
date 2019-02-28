@@ -68,6 +68,6 @@ The program automatically scans the cost entry of the input data, and finds the 
 Since the maximal number of decimal digits is three (9.991), the output cost will be formatted as:
 
 ```
-DRUG1,2,19.991
 DRUG2,1,76.100
+DRUG1,2,19.991
 ```
