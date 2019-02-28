@@ -57,7 +57,7 @@ If the input data has corrupted fields, such as
 
 3. Lowercase/uppercase
 
-When counting the number of prescribers, I ignore differences in uppercase and lowercase letters. 'Jordan' is considered the same as 'JORDAN'. Drug names, however, are exactly the same as in the input file. 'DRUG1' is considered different from 'Drug1'.
+When counting the number of prescribers, I ignore differences in uppercase and lowercase letters. 'Jordan' is considered the same as 'JORDAN'. Drug names, however, are exactly the same as in the input file. 'DRUG1' is considered different from 'Drug1'. This is to conform to the project requirement "the exact drug name as shown in the input dataset".
 
 ## Note
 
